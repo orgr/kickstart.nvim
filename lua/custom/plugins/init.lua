@@ -4,6 +4,7 @@
 -- See the kickstart.nvim README for more information
 return {
   {
+    -- 'pimalaya/himalaya-vim',
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
@@ -94,7 +95,7 @@ return {
             -- Can also be a function to return dynamic value.
             -- If not provided, the path will be inferred by checking for
             -- virtual envs in the local directory and for Pipenev/Poetry configs
-            python = '/opt/homebrew/Caskroom/miniconda/base/envs/sem-layer/bin/python',
+            python = '/Users/or/transactions/.venv/bin/python',
             -- Returns if a given file path is a test file.
             -- NB: This function is called a lot so don't perform any heavy tasks within it.
             -- is_test_file = function(file_path)

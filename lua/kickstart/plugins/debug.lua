@@ -9,6 +9,7 @@
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
+  event = 'VeryLazy',
   -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
@@ -23,6 +24,8 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+
+    'mfussenegger/nvim-dap-python',
   },
   keys = function(_, keys)
     local dap = require 'dap'
@@ -58,7 +61,25 @@ return {
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
-      handlers = {},
+      handlers = {
+        function(config)
+          -- all sources with no handler get passed here
+
+          -- Keep original functionality
+          require('mason-nvim-dap').default_setup(config)
+        end,
+        python = function(config)
+          config.adapters = {
+            type = 'executable',
+            command = 'python',
+            args = {
+              '-m',
+              'debugpy.adapter',
+            },
+          }
+          require('mason-nvim-dap').default_setup(config) -- don't forget this!
+        end,
+      },
 
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
@@ -67,6 +88,7 @@ return {
         'delve',
         'codelldb',
         'cpptools',
+        'python',
       },
     }
 
@@ -116,5 +138,6 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+    require('dap-python').setup 'uv'
   end,
 }

@@ -3,6 +3,7 @@
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
+  event = 'VeryLazy',
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -19,6 +20,7 @@ return {
         mappings = {
           ['\\'] = 'close_window',
           ['/'] = 'noop',
+          ['<tab>'] = 'toggle_node',
         },
       },
     },

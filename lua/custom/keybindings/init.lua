@@ -7,10 +7,6 @@ return {
   vim.keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'New Horizontal Split' }),
   vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'New Vertical Split' }),
   vim.keymap.set('n', '<leader>wq', '<C-w>q', { desc = 'Close Window' }),
-  vim.keymap.set('n', '<leader>th', function()
-    local virtual_text_enabled = not vim.diagnostic.config().virtual_text
-    vim.diagnostic.config { virtual_text = virtual_text_enabled }
-  end, { desc = 'no desc' }),
 
   vim.keymap.set('n', '<leader>sF', function()
     require('telescope.builtin').find_files { hidden = true, no_ignore = true }
@@ -19,4 +15,9 @@ return {
   vim.keymap.set('n', '<leader>sj', require('telescope.builtin').lsp_document_symbols, { desc = 'Document [S]ymbols' }),
 
   vim.keymap.set('n', '<leader>sJ', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols' }),
+
+  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' }),
+
+  vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv"),
+  vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv"),
 }

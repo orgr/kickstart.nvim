@@ -4,8 +4,8 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    -- 'pimalaya/himalaya-vim',
     'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
@@ -61,14 +61,15 @@ return {
           lualine_y = { 'progress' },
           lualine_z = {},
         },
-        extensions = { 'neo-tree', 'nvim-dap-ui' },
+        extensions = { 'neo-tree' },
       }
     end,
   },
   'tpope/vim-rsi',
-  'stevearc/dressing.nvim',
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
   {
     'nvim-neotest/neotest',
+    event = 'VeryLazy',
     dependencies = {
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
@@ -118,12 +119,71 @@ return {
     end,
   },
   -- {
+  --   'olimorris/codecompanion.nvim',
+  --   event = 'VeryLazy',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-treesitter/nvim-treesitter',
+  --   },
+  --
+  --   config = function()
+  --     require('codecompanion').setup {
+  --       display = {
+  --         action_palette = {
+  --           width = 95,
+  --           height = 10,
+  --           provider = 'telescope',
+  --         },
+  --         diff = {
+  --           provider = 'mini_diff',
+  --         },
+  --       },
+  --       adapters = {
+  --         ollama = function()
+  --           return require('codecompanion.adapters').extend('ollama', {
+  --             schema = {
+  --               model = {
+  --                 default = 'qwen2.5-coder:7b',
+  --               },
+  --               num_ctx = {
+  --                 default = 32768,
+  --               },
+  --               num_predict = {
+  --                 default = -1,
+  --               },
+  --             },
+  --           })
+  --         end,
+  --       },
+  --       strategies = {
+  --         chat = {
+  --           adapter = 'ollama',
+  --         },
+  --         inline = {
+  --           adapter = 'ollama',
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
+  -- {
   --   'yetone/avante.nvim',
   --   event = 'VeryLazy',
   --   lazy = false,
   --   version = false, -- set this if you want to always pull the latest change
   --   opts = {
-  --     -- add any opts here
+  --     debug = true,
+  --     provider = 'ollama',
+  --     ollama = {
+  --       api_key_name = '',
+  --       endpoint = 'http://127.0.0.1:11434',
+  --       model = 'qwen2.5-coder:7b',
+  --       options = {
+  --         num_ctx = 32768,
+  --         temperature = 0,
+  --       },
+  --       stream = true,
+  --     },
   --   },
   --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   --   build = 'make',
@@ -165,6 +225,7 @@ return {
   -- },
   {
     'ldelossa/nvim-dap-projects',
+    event = 'VeryLazy',
     config = function()
       require('nvim-dap-projects').search_project_config()
       vim.keymap.set('n', '<leader>dc', require('nvim-dap-projects').search_project_config, { desc = '[Debug] search debug [c]onfig' })
@@ -187,12 +248,14 @@ return {
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },
     -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    version = '^5.0.0', -- pin major version, include fixes and features that do not have breaking changes
+    version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
     config = function()
       require('kitty-scrollback').setup()
     end,
   },
   { require('mini.align').setup() },
+
+  { require('mini.diff').setup() },
   {
     require('mini.operators').setup {
       -- Each entry configures one operator.
@@ -251,9 +314,70 @@ return {
           node_decremental = '<leader>V',
         },
       },
+      textobjects = {
+
+        select = {
+          enable = true,
+
+          -- Automatically jump forward to textobj, similar to targets.vim
+          lookahead = true,
+
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            -- You can optionally set descriptions to the mappings (used in the desc parameter of
+            -- nvim_buf_set_keymap) which plugins like which-key display
+            ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
+            -- You can also use captures from other query groups like `locals.scm`
+            ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
+          },
+
+          -- move = {
+          --   enable = true,
+          --   set_jumps = true, -- whether to set jumps in the jumplist
+          --   goto_next_start = {
+          --     [']m'] = '@function.outer',
+          --     [']]'] = { query = '@class.outer', desc = 'Next class start' },
+          --     --
+          --     -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
+          --     [']o'] = '@loop.*',
+          --     -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+          --     --
+          --     -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+          --     -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+          --     [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'Next scope' },
+          --     [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
+          --   },
+          --   goto_next_end = {
+          --     [']M'] = '@function.outer',
+          --     [']['] = '@class.outer',
+          --   },
+          --   goto_previous_start = {
+          --     ['[m'] = '@function.outer',
+          --     ['[['] = '@class.outer',
+          --   },
+          --   goto_previous_end = {
+          --     ['[M'] = '@function.outer',
+          --     ['[]'] = '@class.outer',
+          --   },
+          --   -- Below will go to either the start or the end, whichever is closer.
+          --   -- Use if you want more granular movements
+          --   -- Make it even more gradual by adding multiple queries and regex.
+          --   goto_next = {
+          --     [']d'] = '@conditional.outer',
+          --   },
+          --   goto_previous = {
+          --     ['[d'] = '@conditional.outer',
+          -- },
+          -- },
+        },
+      },
     },
   },
   { 'nvim-treesitter/nvim-treesitter-context' },
+  { 'nvim-treesitter/nvim-treesitter-textobjects' },
   { require('mini.bracketed').setup() },
   {
     's1n7ax/nvim-window-picker',
@@ -266,25 +390,26 @@ return {
       }
     end,
   },
-  {
-    'smoka7/multicursors.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'nvimtools/hydra.nvim',
-    },
-    opts = {},
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-    keys = {
-      {
-        mode = { 'v', 'n' },
-        '<Leader>m',
-        '<cmd>MCstart<cr>',
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
-  },
+  -- {
+  --   'smoka7/multicursors.nvim',
+  --   event = 'VeryLazy',
+  --   dependencies = {
+  --     'nvimtools/hydra.nvim',
+  --   },
+  --   opts = {},
+  --   cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+  --   keys = {
+  --     {
+  --       mode = { 'v', 'n' },
+  --       '<Leader>m',
+  --       '<cmd>MCstart<cr>',
+  --       desc = 'Create a selection for selected text or word under the cursor',
+  --     },
+  --   },
+  -- },
   {
     'NeogitOrg/neogit',
+    event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
@@ -306,34 +431,16 @@ return {
     end,
   },
   'knubie/vim-kitty-navigator',
-  'rvmelkonian/move.vim',
   'nvim-tree/nvim-web-devicons',
   {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-  },
-  {
-    'cameron-wags/rainbow_csv.nvim',
-    config = true,
-    ft = {
-      'csv',
-      'tsv',
-      'csv_semicolon',
-      'csv_whitespace',
-      'csv_pipe',
-      'rfc_csv',
-      'rfc_semicolon',
-    },
-    cmd = {
-      'RainbowDelim',
-      'RainbowDelimSimple',
-      'RainbowDelimQuoted',
-      'RainbowMultiDelim',
-    },
+    'MeanderingProgrammer/render-markdown.nvim',
+    event = 'VeryLazy',
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
   },
   {
     'folke/flash.nvim',
@@ -365,9 +472,9 @@ return {
             { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
   },
-  { 'Mofiqul/vscode.nvim' },
   {
     'kawre/leetcode.nvim',
+    event = 'VeryLazy',
     build = ':TSUpdate html',
     dependencies = {
       'nvim-telescope/telescope.nvim',
@@ -384,9 +491,4 @@ return {
       lang = 'rust',
     },
   },
-  -- {
-  --   'mrcjkb/rustaceanvim',
-  --   version = '^5', -- Recommended
-  --   ft = { 'rust' },
-  -- },
 }

@@ -1,9 +1,8 @@
--- You can add your own plugins here or in other files in this directory!
+-- You can add your own plugins here or in other files in this directory
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
 return {
-<<<<<<< HEAD
   -- {
   --   'nvim-lualine/lualine.nvim',
   --   event = 'VeryLazy',
@@ -71,73 +70,6 @@ return {
   {
     'nvim-neotest/neotest',
     event = 'VeryLazy',
-=======
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('lualine').setup {
-        options = {
-          icons_enabled = true,
-          theme = 'auto',
-          component_separators = { left = '', right = '' },
-          section_separators = { left = '', right = '' },
-          disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-          },
-          ignore_focus = {},
-          always_divide_middle = true,
-          always_show_tabline = true,
-          globalstatus = true,
-          refresh = {
-            statusline = 100,
-            tabline = 100,
-            winbar = 100,
-          },
-        },
-        sections = {
-          lualine_a = { 'mode' },
-          lualine_b = { 'branch' },
-          lualine_c = { { 'windows', component_separators = { left = '', right = '' }, section_separators = { left = '', right = '' } } },
-          lualine_x = { 'encoding', 'fileformat', 'filetype' },
-          lualine_y = { 'progress' },
-          lualine_z = { 'location' },
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { 'filename' },
-          lualine_x = { 'location' },
-          lualine_y = {},
-          lualine_z = {},
-        },
-        tabline = {},
-        winbar = {
-          lualine_a = {},
-          lualine_b = { 'filename' },
-          lualine_c = { 'diff' },
-          lualine_x = { 'diagnostics' },
-          lualine_y = { 'progress' },
-          lualine_z = {},
-        },
-        inactive_winbar = {
-          lualine_a = {},
-          lualine_b = { 'filename' },
-          lualine_c = { 'diff' },
-          lualine_x = { 'diagnostics' },
-          lualine_y = { 'progress' },
-          lualine_z = {},
-        },
-        extensions = { 'neo-tree', 'nvim-dap-ui' },
-      }
-    end,
-  },
-  'tpope/vim-rsi',
-  'stevearc/dressing.nvim',
-  {
-    'nvim-neotest/neotest',
->>>>>>> c0a62fd (good stuff)
     dependencies = {
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
@@ -164,11 +96,7 @@ return {
             -- Can also be a function to return dynamic value.
             -- If not provided, the path will be inferred by checking for
             -- virtual envs in the local directory and for Pipenev/Poetry configs
-<<<<<<< HEAD
             python = '/Users/or/transactions/.venv/bin/python',
-=======
-            python = '/opt/homebrew/Caskroom/miniconda/base/envs/sem-layer/bin/python',
->>>>>>> c0a62fd (good stuff)
             -- Returns if a given file path is a test file.
             -- NB: This function is called a lot so don't perform any heavy tasks within it.
             -- is_test_file = function(file_path)
@@ -191,7 +119,6 @@ return {
     end,
   },
   -- {
-<<<<<<< HEAD
   --   'olimorris/codecompanion.nvim',
   --   event = 'VeryLazy',
   --   dependencies = {
@@ -240,14 +167,11 @@ return {
   --   end,
   -- },
   -- {
-=======
->>>>>>> c0a62fd (good stuff)
   --   'yetone/avante.nvim',
   --   event = 'VeryLazy',
   --   lazy = false,
   --   version = false, -- set this if you want to always pull the latest change
   --   opts = {
-<<<<<<< HEAD
   --     debug = true,
   --     provider = 'ollama',
   --     ollama = {
@@ -260,9 +184,6 @@ return {
   --       },
   --       stream = true,
   --     },
-=======
-  --     -- add any opts here
->>>>>>> c0a62fd (good stuff)
   --   },
   --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   --   build = 'make',
@@ -304,10 +225,7 @@ return {
   -- },
   {
     'ldelossa/nvim-dap-projects',
-<<<<<<< HEAD
     event = 'VeryLazy',
-=======
->>>>>>> c0a62fd (good stuff)
     config = function()
       require('nvim-dap-projects').search_project_config()
       vim.keymap.set('n', '<leader>dc', require('nvim-dap-projects').search_project_config, { desc = '[Debug] search debug [c]onfig' })
@@ -330,21 +248,14 @@ return {
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },
     -- version = '*', -- latest stable version, may have breaking changes if major version changed
-<<<<<<< HEAD
     version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
-=======
-    version = '^5.0.0', -- pin major version, include fixes and features that do not have breaking changes
->>>>>>> c0a62fd (good stuff)
     config = function()
       require('kitty-scrollback').setup()
     end,
   },
   { require('mini.align').setup() },
-<<<<<<< HEAD
 
   { require('mini.diff').setup() },
-=======
->>>>>>> c0a62fd (good stuff)
   {
     require('mini.operators').setup {
       -- Each entry configures one operator.
@@ -403,7 +314,6 @@ return {
           node_decremental = '<leader>V',
         },
       },
-<<<<<<< HEAD
       textobjects = {
 
         select = {
@@ -468,11 +378,6 @@ return {
   },
   { 'nvim-treesitter/nvim-treesitter-context', event = 'VeryLazy' },
   { 'nvim-treesitter/nvim-treesitter-textobjects', event = 'VeryLazy' },
-=======
-    },
-  },
-  { 'nvim-treesitter/nvim-treesitter-context' },
->>>>>>> c0a62fd (good stuff)
   { require('mini.bracketed').setup() },
   {
     's1n7ax/nvim-window-picker',
@@ -485,7 +390,6 @@ return {
       }
     end,
   },
-<<<<<<< HEAD
   -- {
   --   'smoka7/multicursors.nvim',
   --   event = 'VeryLazy',
@@ -506,27 +410,6 @@ return {
   {
     'NeogitOrg/neogit',
     event = 'VeryLazy',
-=======
-  {
-    'smoka7/multicursors.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'nvimtools/hydra.nvim',
-    },
-    opts = {},
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-    keys = {
-      {
-        mode = { 'v', 'n' },
-        '<Leader>m',
-        '<cmd>MCstart<cr>',
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
-  },
-  {
-    'NeogitOrg/neogit',
->>>>>>> c0a62fd (good stuff)
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
@@ -548,7 +431,6 @@ return {
     end,
   },
   'knubie/vim-kitty-navigator',
-<<<<<<< HEAD
   'nvim-tree/nvim-web-devicons',
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -559,36 +441,6 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
-=======
-  'rvmelkonian/move.vim',
-  'nvim-tree/nvim-web-devicons',
-  {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-  },
-  {
-    'cameron-wags/rainbow_csv.nvim',
-    config = true,
-    ft = {
-      'csv',
-      'tsv',
-      'csv_semicolon',
-      'csv_whitespace',
-      'csv_pipe',
-      'rfc_csv',
-      'rfc_semicolon',
-    },
-    cmd = {
-      'RainbowDelim',
-      'RainbowDelimSimple',
-      'RainbowDelimQuoted',
-      'RainbowMultiDelim',
-    },
->>>>>>> c0a62fd (good stuff)
   },
   {
     'folke/flash.nvim',
@@ -620,15 +472,9 @@ return {
             { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
   },
-<<<<<<< HEAD
   {
     'kawre/leetcode.nvim',
     event = 'VeryLazy',
-=======
-  { 'Mofiqul/vscode.nvim' },
-  {
-    'kawre/leetcode.nvim',
->>>>>>> c0a62fd (good stuff)
     build = ':TSUpdate html',
     dependencies = {
       'nvim-telescope/telescope.nvim',
@@ -645,7 +491,6 @@ return {
       lang = 'rust',
     },
   },
-<<<<<<< HEAD
   {
     'nvim-neorg/neorg',
     event = 'VeryLazy',
@@ -709,11 +554,4 @@ return {
       }
     end,
   },
-=======
-  -- {
-  --   'mrcjkb/rustaceanvim',
-  --   version = '^5', -- Recommended
-  --   ft = { 'rust' },
-  -- },
->>>>>>> c0a62fd (good stuff)
 }

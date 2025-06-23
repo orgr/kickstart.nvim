@@ -20,10 +20,7 @@ return {
         mappings = {
           ['\\'] = 'close_window',
           ['/'] = 'noop',
-<<<<<<< HEAD
           ['<tab>'] = 'toggle_node',
-=======
->>>>>>> c0a62fd (good stuff)
         },
       },
     },

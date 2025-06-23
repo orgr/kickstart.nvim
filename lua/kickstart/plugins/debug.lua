@@ -88,7 +88,10 @@ return {
         'delve',
         'codelldb',
         'cpptools',
+<<<<<<< HEAD
         'python',
+=======
+>>>>>>> c0a62fd (good stuff)
       },
     }
 

@@ -7,10 +7,6 @@ return {
   vim.keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'New Horizontal Split' }),
   vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'New Vertical Split' }),
   vim.keymap.set('n', '<leader>wq', '<C-w>q', { desc = 'Close Window' }),
-  vim.keymap.set('n', '<leader>th', function()
-    local virtual_text_enabled = not vim.diagnostic.config().virtual_text
-    vim.diagnostic.config { virtual_text = virtual_text_enabled }
-  end, { desc = 'no desc' }),
 
   vim.keymap.set('n', '<leader>sF', function()
     require('telescope.builtin').find_files { hidden = true, no_ignore = true }

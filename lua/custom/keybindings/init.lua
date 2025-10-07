@@ -20,4 +20,16 @@ return {
 
   vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv"),
   vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv"),
+
+  vim.keymap.set('n', '<leader>th', function()
+    local virtual_text_enabled = not vim.diagnostic.config().virtual_text
+    vim.diagnostic.config { virtual_text = virtual_text_enabled }
+  end, { desc = 'no desc' }),
+
+  vim.keymap.set('n', '<leader>gh', ':DiffviewFileHistory % <CR>'),
+  vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h', { desc = 'Move focus to the left window' }),
+  vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l', { desc = 'Move focus to the right window' }),
+  vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j', { desc = 'Move focus to the lower window' }),
+  vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = 'Move focus to the upper window' }),
+  vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }),
 }

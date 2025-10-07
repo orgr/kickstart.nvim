@@ -3,68 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  -- {
-  --   'nvim-lualine/lualine.nvim',
-  --   event = 'VeryLazy',
-  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  --   config = function()
-  --     require('lualine').setup {
-  --       options = {
-  --         icons_enabled = true,
-  --         theme = 'auto',
-  --         component_separators = { left = '', right = '' },
-  --         section_separators = { left = '', right = '' },
-  --         disabled_filetypes = {
-  --           statusline = {},
-  --           winbar = {},
-  --         },
-  --         ignore_focus = {},
-  --         always_divide_middle = true,
-  --         always_show_tabline = true,
-  --         globalstatus = true,
-  --         refresh = {
-  --           statusline = 100,
-  --           tabline = 100,
-  --           winbar = 100,
-  --         },
-  --       },
-  --       sections = {
-  --         lualine_a = { 'mode' },
-  --         lualine_b = { 'branch' },
-  --         lualine_c = { { 'windows', component_separators = { left = '', right = '' }, section_separators = { left = '', right = '' } } },
-  --         lualine_x = { 'encoding', 'fileformat', 'filetype' },
-  --         lualine_y = { 'progress' },
-  --         lualine_z = { 'location' },
-  --       },
-  --       inactive_sections = {
-  --         lualine_a = {},
-  --         lualine_b = {},
-  --         lualine_c = { 'filename' },
-  --         lualine_x = { 'location' },
-  --         lualine_y = {},
-  --         lualine_z = {},
-  --       },
-  --       tabline = {},
-  --       winbar = {
-  --         lualine_a = {},
-  --         lualine_b = { 'filename' },
-  --         lualine_c = { 'diff' },
-  --         lualine_x = { 'diagnostics' },
-  --         lualine_y = { 'progress' },
-  --         lualine_z = {},
-  --       },
-  --       inactive_winbar = {
-  --         lualine_a = {},
-  --         lualine_b = { 'filename' },
-  --         lualine_c = { 'diff' },
-  --         lualine_x = { 'diagnostics' },
-  --         lualine_y = { 'progress' },
-  --         lualine_z = {},
-  --       },
-  --       extensions = { 'neo-tree' },
-  --     }
-  --   end,
-  -- },
   'tpope/vim-rsi',
   { 'stevearc/dressing.nvim', event = 'VeryLazy' },
   {
@@ -118,111 +56,51 @@ return {
       vim.keymap.set('n', '<leader>tt', require('neotest').summary.toggle, { desc = '[T]est show test [t]ree summary' })
     end,
   },
-  -- {
-  --   'olimorris/codecompanion.nvim',
-  --   event = 'VeryLazy',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-treesitter/nvim-treesitter',
-  --   },
-  --
-  --   config = function()
-  --     require('codecompanion').setup {
-  --       display = {
-  --         action_palette = {
-  --           width = 95,
-  --           height = 10,
-  --           provider = 'telescope',
-  --         },
-  --         diff = {
-  --           provider = 'mini_diff',
-  --         },
-  --       },
-  --       adapters = {
-  --         ollama = function()
-  --           return require('codecompanion.adapters').extend('ollama', {
-  --             schema = {
-  --               model = {
-  --                 default = 'qwen2.5-coder:7b',
-  --               },
-  --               num_ctx = {
-  --                 default = 32768,
-  --               },
-  --               num_predict = {
-  --                 default = -1,
-  --               },
-  --             },
-  --           })
-  --         end,
-  --       },
-  --       strategies = {
-  --         chat = {
-  --           adapter = 'ollama',
-  --         },
-  --         inline = {
-  --           adapter = 'ollama',
-  --         },
-  --       },
-  --     }
-  --   end,
-  -- },
-  -- {
-  --   'yetone/avante.nvim',
-  --   event = 'VeryLazy',
-  --   lazy = false,
-  --   version = false, -- set this if you want to always pull the latest change
-  --   opts = {
-  --     debug = true,
-  --     provider = 'ollama',
-  --     ollama = {
-  --       api_key_name = '',
-  --       endpoint = 'http://127.0.0.1:11434',
-  --       model = 'qwen2.5-coder:7b',
-  --       options = {
-  --         num_ctx = 32768,
-  --         temperature = 0,
-  --       },
-  --       stream = true,
-  --     },
-  --   },
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = 'make',
-  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  --   dependencies = {
-  --     'nvim-treesitter/nvim-treesitter',
-  --     'stevearc/dressing.nvim',
-  --     'nvim-lua/plenary.nvim',
-  --     'MunifTanjim/nui.nvim',
-  --     --- The below dependencies are optional,
-  --     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-  --     'zbirenbaum/copilot.lua', -- for providers='copilot'
-  --     {
-  --       -- support for image pasting
-  --       'HakonHarnes/img-clip.nvim',
-  --       event = 'VeryLazy',
-  --       opts = {
-  --         -- recommended settings
-  --         default = {
-  --           embed_image_as_base64 = false,
-  --           prompt_for_file_name = false,
-  --           drag_and_drop = {
-  --             insert_mode = true,
-  --           },
-  --           -- required for Windows users
-  --           use_absolute_path = true,
-  --         },
-  --       },
-  --     },
-  --     {
-  --       -- Make sure to set this up properly if you have lazy=true
-  --       'MeanderingProgrammer/render-markdown.nvim',
-  --       opts = {
-  --         file_types = { 'markdown', 'Avante' },
-  --       },
-  --       ft = { 'markdown', 'Avante' },
-  --     },
-  --   },
-  -- },
+  {
+    'olimorris/codecompanion.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+
+    config = function()
+      require('codecompanion').setup {
+        display = {
+          action_palette = {
+            width = 95,
+            height = 10,
+            provider = 'telescope',
+          },
+          diff = {
+            provider = 'mini_diff',
+          },
+        },
+        strategies = {
+          chat = {
+            adapter = 'openai',
+            model = 'gpt-5',
+          },
+          inline = {
+            adapter = 'openai',
+            model = 'gpt-5',
+
+            keymaps = {
+              accept_change = {
+                modes = { n = '<leader>y' },
+                description = 'Accept the suggested change',
+              },
+              reject_change = {
+                modes = { n = '<leader>u' },
+                opts = { nowait = true },
+                description = 'Reject the suggested change',
+              },
+            },
+          },
+        },
+      }
+    end,
+  },
   {
     'ldelossa/nvim-dap-projects',
     event = 'VeryLazy',
@@ -255,7 +133,25 @@ return {
   },
   { require('mini.align').setup() },
 
-  { require('mini.diff').setup() },
+  {
+    'echasnovski/mini.diff',
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>go',
+        function()
+          require('mini.diff').toggle_overlay(0)
+        end,
+        desc = 'Toggle mini.diff overlay',
+      },
+    },
+    opts = {
+      view = {
+        style = 'number',
+      },
+      priority = 0,
+    },
+  },
   {
     require('mini.operators').setup {
       -- Each entry configures one operator.
@@ -287,12 +183,12 @@ return {
       },
 
       -- Replace text with register
-      replace = {
-        prefix = '<leader>p',
-
-        -- Whether to reindent new text to match previous indent
-        reindent_linewise = true,
-      },
+      -- replace = {
+      --   prefix = '<leader>p',
+      --
+      --   -- Whether to reindent new text to match previous indent
+      --   reindent_linewise = true,
+      -- },
 
       -- Sort text
       sort = {
@@ -303,81 +199,21 @@ return {
       },
     },
   },
+  -- { 'RRethy/nvim-treesitter-textsubjects' }, -- this adds <v.>, <v;> and <vi;> keybindings
   {
     require('nvim-treesitter.configs').setup {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = '<leader>v',
-          node_incremental = '<leader>v',
+          init_selection = '<tab>',
+          node_incremental = '<tab>',
           scope_incremental = false,
-          node_decremental = '<leader>V',
-        },
-      },
-      textobjects = {
-
-        select = {
-          enable = true,
-
-          -- Automatically jump forward to textobj, similar to targets.vim
-          lookahead = true,
-
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            -- You can optionally set descriptions to the mappings (used in the desc parameter of
-            -- nvim_buf_set_keymap) which plugins like which-key display
-            ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
-            -- You can also use captures from other query groups like `locals.scm`
-            ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
-          },
-
-          -- move = {
-          --   enable = true,
-          --   set_jumps = true, -- whether to set jumps in the jumplist
-          --   goto_next_start = {
-          --     [']m'] = '@function.outer',
-          --     [']]'] = { query = '@class.outer', desc = 'Next class start' },
-          --     --
-          --     -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
-          --     [']o'] = '@loop.*',
-          --     -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-          --     --
-          --     -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-          --     -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-          --     [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'Next scope' },
-          --     [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
-          --   },
-          --   goto_next_end = {
-          --     [']M'] = '@function.outer',
-          --     [']['] = '@class.outer',
-          --   },
-          --   goto_previous_start = {
-          --     ['[m'] = '@function.outer',
-          --     ['[['] = '@class.outer',
-          --   },
-          --   goto_previous_end = {
-          --     ['[M'] = '@function.outer',
-          --     ['[]'] = '@class.outer',
-          --   },
-          --   -- Below will go to either the start or the end, whichever is closer.
-          --   -- Use if you want more granular movements
-          --   -- Make it even more gradual by adding multiple queries and regex.
-          --   goto_next = {
-          --     [']d'] = '@conditional.outer',
-          --   },
-          --   goto_previous = {
-          --     ['[d'] = '@conditional.outer',
-          -- },
-          -- },
+          node_decremental = '<BS>',
         },
       },
     },
   },
   { 'nvim-treesitter/nvim-treesitter-context', event = 'VeryLazy' },
-  { 'nvim-treesitter/nvim-treesitter-textobjects', event = 'VeryLazy' },
   { require('mini.bracketed').setup() },
   {
     's1n7ax/nvim-window-picker',
@@ -428,6 +264,10 @@ return {
           neogit.open { kind = 'split_below_all' }
         end
       end, { desc = '[G]it' })
+      vim.keymap.set('n', '<leader>gb', function()
+        require('neogit').open { 'branch' }
+      end, { desc = 'git [B]ranch' })
+      -- vim.keymap.set('n', '<leader>gbc', require('neogit').lib.git.branch.create, { desc = 'create branch' })
     end,
   },
   'knubie/vim-kitty-navigator',
@@ -451,21 +291,18 @@ return {
         -- options used when flash is activated through
         -- a regular search with `/` or `?`
         search = {
-          -- when `true`, flash will be activated during regular search by default.
-          -- You can always toggle when searching with `require("flash").toggle()`
           enabled = true,
           highlight = { backdrop = false },
-          jump = { history = true, register = true, nohlsearch = true },
-          -- `forward` will be automatically set to the search direction
-          -- `mode` is always set to `search`
-          -- `incremental` is set to `true` when `incsearch` is enabled
+        },
+        char = {
+          jump_labels = true,
         },
       },
       multi_window = false,
     },
               -- stylua: ignore
     keys = {
-            { "<c-/>", mode = { "n", "o", "x" }, function() require("flash").treesitter_search() end, desc = "Flash" },
+            { "<c-/>", mode = { "n", "o", "x" }, function() require("flash").jump() end, desc = "Flash" },
             { "<c-'>", mode = { "n", "o", "x" }, function() require("flash").jump({pattern = vim.fn.expand("<cword>")}) end, desc = "Flash" },
             { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
             { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
@@ -505,6 +342,7 @@ return {
               workspaces = {
                 notes = '~/notes',
                 spanish = '~/personal/spanish',
+                personal = '~/personal/notes',
               },
               default_workspace = 'notes',
             },
@@ -518,7 +356,7 @@ return {
   },
   {
     'kndndrj/nvim-dbee',
-    -- lazy = true,
+    event = 'VeryLazy',
     dependencies = {
       'MunifTanjim/nui.nvim',
     },
@@ -553,5 +391,57 @@ return {
         },
       }
     end,
+  },
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {},
+  -- },
+  {
+    'f-person/git-blame.nvim',
+    -- load the plugin at startup
+    event = 'VeryLazy',
+    -- Because of the keys part, you will be lazy loading this plugin.
+    -- The plugin will only load once one of the keys is used.
+    -- If you want to load the plugin at startup, add something like event = "VeryLazy",
+    -- or lazy = false. One of both options will work.
+    opts = {
+      -- your configuration comes here
+      -- for example
+      enabled = true, -- if you want to enable the plugin
+      message_template = ' <summary> • <date> • <author> • <<sha>>', -- template for the blame message, check the Message template section for more options
+      date_format = '%m-%d-%Y %H:%M:%S', -- template for the date, check Date format section for more options
+      virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+    },
+  },
+  {
+    'gbprod/yanky.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      { 'kkharji/sqlite.lua' },
+    },
+    opts = {
+      ring = { storage = 'sqlite' },
+    },
+    keys = {
+      { '<leader>p', '<cmd>YankyRingHistory<cr>', mode = { 'n', 'x' }, desc = 'Open Yank History' },
+      { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' }, desc = 'Yank text' },
+      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'Put yanked text after cursor' },
+      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'Put yanked text before cursor' },
+      { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' }, desc = 'Put yanked text after selection' },
+      { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'Put yanked text before selection' },
+      { '<c-p>', '<Plug>(YankyPreviousEntry)', desc = 'Select previous entry through yank history' },
+      { '<c-n>', '<Plug>(YankyNextEntry)', desc = 'Select next entry through yank history' },
+      { ']p', '<Plug>(YankyPutIndentAfterLinewise)', desc = 'Put indented after cursor (linewise)' },
+      { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', desc = 'Put indented before cursor (linewise)' },
+      { ']P', '<Plug>(YankyPutIndentAfterLinewise)', desc = 'Put indented after cursor (linewise)' },
+      { '[P', '<Plug>(YankyPutIndentBeforeLinewise)', desc = 'Put indented before cursor (linewise)' },
+      { '>p', '<Plug>(YankyPutIndentAfterShiftRight)', desc = 'Put and indent right' },
+      { '<p', '<Plug>(YankyPutIndentAfterShiftLeft)', desc = 'Put and indent left' },
+      { '>P', '<Plug>(YankyPutIndentBeforeShiftRight)', desc = 'Put before and indent right' },
+      { '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', desc = 'Put before and indent left' },
+      { '=p', '<Plug>(YankyPutAfterFilter)', desc = 'Put after applying a filter' },
+      { '=P', '<Plug>(YankyPutBeforeFilter)', desc = 'Put before applying a filter' },
+    },
   },
 }

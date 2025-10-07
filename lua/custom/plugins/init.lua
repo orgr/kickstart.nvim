@@ -112,12 +112,13 @@ return {
   {
     'mrjones2014/smart-splits.nvim',
     build = './kitty/install-kittens.bash',
-    config = function()
-      vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-      vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-      vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-      vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
-    end,
+    event = 'VeryLazy',
+    keys = {
+      { '<A-h>', function() require('smart-splits').resize_left() end, desc = 'Resize left' },
+      { '<A-j>', function() require('smart-splits').resize_down() end, desc = 'Resize down' },
+      { '<A-k>', function() require('smart-splits').resize_up() end, desc = 'Resize up' },
+      { '<A-l>', function() require('smart-splits').resize_right() end, desc = 'Resize right' },
+    },
   },
   {
     'mikesmithgh/kitty-scrollback.nvim',
@@ -271,7 +272,6 @@ return {
     end,
   },
   'knubie/vim-kitty-navigator',
-  'nvim-tree/nvim-web-devicons',
   {
     'MeanderingProgrammer/render-markdown.nvim',
     event = 'VeryLazy',

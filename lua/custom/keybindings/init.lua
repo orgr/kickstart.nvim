@@ -11,10 +11,13 @@ return {
   vim.keymap.set('n', '<leader>sF', function()
     require('telescope.builtin').find_files { hidden = true, no_ignore = true }
   end, { desc = '[S]earch [F]iles (no ignores)' }),
+  vim.keymap.set('n', '<leader>sj', function()
+    require('telescope.builtin').lsp_document_symbols()
+  end, { desc = 'Document [S]ymbols' }),
 
-  vim.keymap.set('n', '<leader>sj', require('telescope.builtin').lsp_document_symbols, { desc = 'Document [S]ymbols' }),
-
-  vim.keymap.set('n', '<leader>sJ', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols' }),
+  vim.keymap.set('n', '<leader>sJ', function()
+    require('telescope.builtin').lsp_dynamic_workspace_symbols()
+  end, { desc = '[W]orkspace [S]ymbols' }),
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' }),
 

@@ -114,10 +114,34 @@ return {
     build = './kitty/install-kittens.bash',
     event = 'VeryLazy',
     keys = {
-      { '<A-h>', function() require('smart-splits').resize_left() end, desc = 'Resize left' },
-      { '<A-j>', function() require('smart-splits').resize_down() end, desc = 'Resize down' },
-      { '<A-k>', function() require('smart-splits').resize_up() end, desc = 'Resize up' },
-      { '<A-l>', function() require('smart-splits').resize_right() end, desc = 'Resize right' },
+      {
+        '<A-h>',
+        function()
+          require('smart-splits').resize_left()
+        end,
+        desc = 'Resize left',
+      },
+      {
+        '<A-j>',
+        function()
+          require('smart-splits').resize_down()
+        end,
+        desc = 'Resize down',
+      },
+      {
+        '<A-k>',
+        function()
+          require('smart-splits').resize_up()
+        end,
+        desc = 'Resize up',
+      },
+      {
+        '<A-l>',
+        function()
+          require('smart-splits').resize_right()
+        end,
+        desc = 'Resize right',
+      },
     },
   },
   {
@@ -132,7 +156,7 @@ return {
       require('kitty-scrollback').setup()
     end,
   },
-  { require('mini.align').setup() },
+  -- mini.align setup is handled in main mini.nvim config
 
   {
     'echasnovski/mini.diff',
@@ -153,69 +177,11 @@ return {
       priority = 0,
     },
   },
-  {
-    require('mini.operators').setup {
-      -- Each entry configures one operator.
-      -- `prefix` defines keys mapped during `setup()`: in Normal mode
-      -- to operate on textobject and line, in Visual - on selection.
-
-      -- Evaluate text and replace with output
-      evaluate = {
-        prefix = '<leader>=',
-
-        -- Function which does the evaluation
-        func = nil,
-      },
-
-      -- Exchange text regions
-      exchange = {
-        prefix = '<leader>x',
-
-        -- Whether to reindent new text to match previous indent
-        reindent_linewise = true,
-      },
-
-      -- Multiply (duplicate) text
-      multiply = {
-        prefix = '<leader>M',
-
-        -- Function which can modify text before multiplying
-        func = nil,
-      },
-
-      -- Replace text with register
-      -- replace = {
-      --   prefix = '<leader>p',
-      --
-      --   -- Whether to reindent new text to match previous indent
-      --   reindent_linewise = true,
-      -- },
-
-      -- Sort text
-      sort = {
-        prefix = '<leader>S',
-
-        -- Function which does the sort
-        func = nil,
-      },
-    },
-  },
+  -- mini.operators setup is handled in main mini.nvim config
   -- { 'RRethy/nvim-treesitter-textsubjects' }, -- this adds <v.>, <v;> and <vi;> keybindings
-  {
-    require('nvim-treesitter.configs').setup {
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<tab>',
-          node_incremental = '<tab>',
-          scope_incremental = false,
-          node_decremental = '<BS>',
-        },
-      },
-    },
-  },
+  -- Treesitter incremental_selection is set in main nvim-treesitter opts
   { 'nvim-treesitter/nvim-treesitter-context', event = 'VeryLazy' },
-  { require('mini.bracketed').setup() },
+  -- mini.bracketed setup is handled in main mini.nvim config
   {
     's1n7ax/nvim-window-picker',
     name = 'window-picker',
@@ -271,7 +237,10 @@ return {
       -- vim.keymap.set('n', '<leader>gbc', require('neogit').lib.git.branch.create, { desc = 'create branch' })
     end,
   },
-  'knubie/vim-kitty-navigator',
+  {
+    'knubie/vim-kitty-navigator',
+    lazy = false, -- ensure it loads; default in this setup is lazy=true
+  },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     event = 'VeryLazy',

@@ -969,6 +969,22 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+      -- Additional mini modules
+      -- Align text with motions and visual selection
+      pcall(function() require('mini.align').setup() end)
+      -- Bracketed motions like [b ]b etc.
+      pcall(function() require('mini.bracketed').setup() end)
+      -- Operators like evaluate/exchange/multiply with custom prefixes
+      pcall(function()
+        require('mini.operators').setup {
+          evaluate = { prefix = '<leader>=' },
+          exchange = { prefix = '<leader>x', reindent_linewise = true },
+          multiply = { prefix = '<leader>M' },
+          -- Example replace operator (disabled by default)
+          -- replace = { prefix = '<leader>p', reindent_linewise = true },
+          sort = { prefix = '<leader>S' },
+        }
+      end)
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
@@ -991,6 +1007,15 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = '<tab>',
+          node_incremental = '<tab>',
+          scope_incremental = false,
+          node_decremental = '<BS>',
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:

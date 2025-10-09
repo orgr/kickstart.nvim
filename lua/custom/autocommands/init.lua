@@ -1,5 +1,6 @@
 return {
   name = 'autocommands',
+  lazy = false,
   dir = '.',
   config = function()
     vim.api.nvim_create_autocmd('BufEnter', {

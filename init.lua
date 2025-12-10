@@ -87,7 +87,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-if vim.loader then vim.loader.enable() end
+if vim.loader then
+  vim.loader.enable()
+end
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -390,16 +392,76 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     keys = {
-      { '<leader>sh', function() require('telescope.builtin').help_tags() end, desc = '[S]earch [H]elp' },
-      { '<leader>sk', function() require('telescope.builtin').keymaps() end, desc = '[S]earch [K]eymaps' },
-      { '<leader>sf', function() require('telescope.builtin').find_files() end, desc = '[S]earch [F]iles' },
-      { '<leader>ss', function() require('telescope.builtin').builtin() end, desc = '[S]elect Telescope' },
-      { '<leader>sw', function() require('telescope.builtin').grep_string() end, desc = '[S]earch current [W]ord' },
-      { '<leader>sg', function() require('telescope.builtin').live_grep() end, desc = '[S]earch by [G]rep' },
-      { '<leader>sd', function() require('telescope.builtin').diagnostics() end, desc = '[S]earch [D]iagnostics' },
-      { '<leader>sr', function() require('telescope.builtin').resume() end, desc = '[S]earch [R]esume' },
-      { '<leader>s.', function() require('telescope.builtin').oldfiles() end, desc = '[S]earch Recent Files' },
-      { '<leader><leader>', function() require('telescope.builtin').buffers() end, desc = 'Find existing buffers' },
+      {
+        '<leader>sh',
+        function()
+          require('telescope.builtin').help_tags()
+        end,
+        desc = '[S]earch [H]elp',
+      },
+      {
+        '<leader>sk',
+        function()
+          require('telescope.builtin').keymaps()
+        end,
+        desc = '[S]earch [K]eymaps',
+      },
+      {
+        '<leader>sf',
+        function()
+          require('telescope.builtin').find_files()
+        end,
+        desc = '[S]earch [F]iles',
+      },
+      {
+        '<leader>ss',
+        function()
+          require('telescope.builtin').builtin()
+        end,
+        desc = '[S]elect Telescope',
+      },
+      {
+        '<leader>sw',
+        function()
+          require('telescope.builtin').grep_string()
+        end,
+        desc = '[S]earch current [W]ord',
+      },
+      {
+        '<leader>sg',
+        function()
+          require('telescope.builtin').live_grep()
+        end,
+        desc = '[S]earch by [G]rep',
+      },
+      {
+        '<leader>sd',
+        function()
+          require('telescope.builtin').diagnostics()
+        end,
+        desc = '[S]earch [D]iagnostics',
+      },
+      {
+        '<leader>sr',
+        function()
+          require('telescope.builtin').resume()
+        end,
+        desc = '[S]earch [R]esume',
+      },
+      {
+        '<leader>s.',
+        function()
+          require('telescope.builtin').oldfiles()
+        end,
+        desc = '[S]earch Recent Files',
+      },
+      {
+        '<leader><leader>',
+        function()
+          require('telescope.builtin').buffers()
+        end,
+        desc = 'Find existing buffers',
+      },
       {
         '<leader>/',
         function()
@@ -752,30 +814,31 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
+    lazy = false,
     cmd = { 'ConformInfo' },
     keys = {
       {
         '<leader>f',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format { async = false, lsp_format = 'fallback' }
         end,
         mode = '',
         desc = '[F]ormat buffer',
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true, sql = true }
+
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
           return {
-            timeout_ms = 500,
+            timeout_ms = 3000,
             lsp_format = 'fallback',
           }
         end
@@ -783,7 +846,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'ruff' },
+        python = { 'ruff_fix', 'ruff_organize_imports', 'ruff_format' },
         typescript = { 'prettier' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
@@ -824,7 +887,6 @@ require('lazy').setup({
         opts = {},
       },
       'folke/lazydev.nvim',
-      { dir = '~/personal/blink-cmp-dbee' },
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -857,6 +919,12 @@ require('lazy').setup({
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
 
+      cmdline = {
+        enabled = true,
+        keymap = { preset = 'inherit' },
+        completion = { menu = { auto_show = true } },
+      },
+
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
@@ -871,10 +939,9 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'dbee' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-          dbee = { name = 'dbee', module = 'blink-cmp-dbee' },
         },
       },
 
@@ -971,9 +1038,13 @@ require('lazy').setup({
       end
       -- Additional mini modules
       -- Align text with motions and visual selection
-      pcall(function() require('mini.align').setup() end)
+      pcall(function()
+        require('mini.align').setup()
+      end)
       -- Bracketed motions like [b ]b etc.
-      pcall(function() require('mini.bracketed').setup() end)
+      pcall(function()
+        require('mini.bracketed').setup()
+      end)
       -- Operators like evaluate/exchange/multiply with custom prefixes
       pcall(function()
         require('mini.operators').setup {

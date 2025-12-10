@@ -3,8 +3,40 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'tpope/vim-rsi',
+  { 'tpope/vim-rsi', event = 'InsertEnter' },
   { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+  {
+    'karb94/neoscroll.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('neoscroll').setup {
+        mappings = { -- Keys to be mapped to their corresponding default scrolling animation
+          '<C-u>',
+          '<C-d>',
+          '<C-b>',
+          '<C-f>',
+          '<C-y>',
+          '<C-e>',
+          'zt',
+          'zz',
+          'zb',
+        },
+        hide_cursor = true, -- Hide cursor while scrolling
+        stop_eof = true, -- Stop at <EOF> when scrolling downwards
+        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+        duration_multiplier = 0.1, -- Global duration multiplier
+        easing = 'quadratic', --  `linear` quadratic` `cubic` `quartic` `quintic` `circular` `sine`
+        pre_hook = nil, -- Function to run before the scrolling animation starts
+        post_hook = nil, -- Function to run after the scrolling animation ends
+        performance_mode = false, -- Disable "Performance Mode" on all buffers.
+        ignored_events = { -- Events ignored while scrolling
+          'WinScrolled',
+          'CursorMoved',
+        },
+      }
+    end,
+  },
   {
     'nvim-neotest/neotest',
     event = 'VeryLazy',
@@ -64,42 +96,47 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
 
-    config = function()
-      require('codecompanion').setup {
-        display = {
-          action_palette = {
-            width = 95,
-            height = 10,
-            provider = 'telescope',
-          },
-          diff = {
-            provider = 'mini_diff',
-          },
+    opts = {
+      strategies = {
+        chat = {
+          adapter = 'claude_code',
         },
-        strategies = {
-          chat = {
-            adapter = 'openai',
-            model = 'gpt-5',
-          },
-          inline = {
-            adapter = 'openai',
-            model = 'gpt-5',
-
-            keymaps = {
-              accept_change = {
-                modes = { n = '<leader>y' },
-                description = 'Accept the suggested change',
-              },
-              reject_change = {
-                modes = { n = '<leader>u' },
-                opts = { nowait = true },
-                description = 'Reject the suggested change',
-              },
-            },
-          },
-        },
-      }
-    end,
+      },
+    },
+    -- config = function()
+    --   require('codecompanion').setup {
+    --     display = {
+    --       action_palette = {
+    --         width = 95,
+    --         height = 10,
+    --         provider = 'telescope',
+    --       },
+    --       diff = {
+    --         provider = 'mini_diff',
+    --       },
+    --     },
+    --     strategies = {
+    --       chat = {
+    --         adapter = 'claude_code',
+    --       },
+    --       inline = {
+    --         adapter = 'claude_code',
+    --
+    --         keymaps = {
+    --           accept_change = {
+    --             modes = { n = '<leader>y' },
+    --             description = 'Accept the suggested change',
+    --           },
+    --           reject_change = {
+    --             modes = { n = '<leader>u' },
+    --             opts = { nowait = true },
+    --             description = 'Reject the suggested change',
+    --           },
+    --         },
+    --       },
+    --     },
+    --   }
+    -- end,
   },
   {
     'ldelossa/nvim-dap-projects',
@@ -151,7 +188,7 @@ return {
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },
     -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
+    version = '^6.3.0', -- pin major version, include fixes and features that do not have breaking changes
     config = function()
       require('kitty-scrollback').setup()
     end,
@@ -262,9 +299,11 @@ return {
         search = {
           enabled = true,
           highlight = { backdrop = false },
+          incremental = true,
         },
         char = {
           jump_labels = true,
+          highlight = { backdrop = false },
         },
       },
       multi_window = false,
@@ -411,6 +450,22 @@ return {
       { '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', desc = 'Put before and indent left' },
       { '=p', '<Plug>(YankyPutAfterFilter)', desc = 'Put after applying a filter' },
       { '=P', '<Plug>(YankyPutBeforeFilter)', desc = 'Put before applying a filter' },
+    },
+  },
+  {
+    'linux-cultist/venv-selector.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
+    },
+    ft = 'python', -- Load when opening Python files
+    keys = {
+      { ',v', '<cmd>VenvSelect<cr>' }, -- Open picker on keymap
+    },
+    opts = { -- this can be an empty lua table - just showing below for clarity.
+      search = {}, -- if you add your own searches, they go here.
+      options = {}, -- if you add plugin options, they go here.
     },
   },
 }

@@ -8,7 +8,7 @@ return {
         if not vim.env.KITTY_PID or args.file == '' then
           return
         end
-        local title = string.format('Nvim - %s', args.file)
+        local title = vim.fn.fnamemodify(args.file, ':.')
         vim.fn.jobstart({ 'kitten', '@', 'set-window-title', title }, { detach = true })
       end,
     })

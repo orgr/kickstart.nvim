@@ -35,4 +35,7 @@ return {
   vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j', { desc = 'Move focus to the lower window' }),
   vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = 'Move focus to the upper window' }),
   vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }),
+
+  vim.keymap.set('n', '<F13>', '<C-i>'),
+  vim.keymap.set('n', '<F14>', '<C-m>'),
 }
